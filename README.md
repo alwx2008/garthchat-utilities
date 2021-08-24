@@ -1,5 +1,9 @@
 <h1 align=center>Garthchat Utilities</h1>
-This project contains various "meta-utilities" for Garthchat. This includes source code generation tools, linting programs, and other stuff to help bootstrap and facilitate the development of Garthchat.
+
+**Welcome to Garthchat Utilities!** This project contains various "meta-utilities" for Garthchat. This includes source code generation tools, linting programs, and other stuff to help bootstrap and facilitate the development of Garthchat.
+
+#### Management
+This project is owned and managed by [Gartham](https://github.com/Gartham). This is meant to be a fun, collaborative, community project that members of my community can contribute to. I'm looking forward to programming with friends and hopefully teaching some how to fluently and effectively program.
 
 # Contribution
 **You may submit contributions to this project**, and are free to ask to be a collaborator/contributor to avoid having to fork the repo to make contributions! Through contributing, however, you grant me, (Gartham), a perpetual, irrevocable, unmodifiable, limitless, royalty-free copyright license to copy, modify, reproduce, export, sublicense, display, distribute, or otherwise do with as I see fit, the contributions you make and derivatives of such contributions. 
@@ -9,6 +13,7 @@ Without effect to the meaning and effects of the text heretofore, note that ther
  2. If this project grows past or away from Garthchat, I'll need the ability to extend or modify the license granted for the contents of the repository as I see fit (possibly to people or entities other than myself), as well as be able to re- or sub-license  the contents of the repository, as I see fit.
 
 Also, please note that the acceptance of contributions to this project does not guarantee that such contributions will become, in any way, a part of Garthchat, or that they will be used by or in the making of Garthchat. Additionally, you must not _require_ any attribution to your contributions. 
+
 Without effect to the meaning and effects of text heretofore, note that this **DOES NOT** mean you will **not** get credit for your work, it just means that you may not, for example, require that derivations of your code explicitly reproduce your name, contact-info, and an image of your face, to the user, as requirements of attribution may make the usage of contributions, which subject to such requirements, infeasible in Garthchat or the future endeavors of this project.
 
 # Other
