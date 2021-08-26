@@ -16,9 +16,20 @@ public class SVGParser extends BufferedParser<PathElement> {
 		this(CharacterParser.from(in));
 	}
 
+	/**
+	 * Parses the next {@link PathElement}, returning <code>null</code> if the end
+	 * of input has been reached or an error if there is otherwise malformed input.
+	 */
 	@Override
 	protected PathElement read() {
-		return null;
+		in.parseWhitespace();
+		switch (in.pk()) {
+		case -1:
+			return null;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + in.nxt());
+		}
+//		return null;
 	}
 
 }
