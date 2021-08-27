@@ -7,6 +7,7 @@ import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.QuadCurveTo;
 import zeale.mouse.utils.BufferedParser;
 import zeale.mouse.utils.CharacterParser;
 import zeale.mouse.utils.Parser;
@@ -234,6 +235,45 @@ public class SVGParser extends BufferedParser<PathElement> {
 				@Override
 				public javafx.scene.shape.PathElement toJavaFX() {
 					CubicCurveTo cc2 = new CubicCurveTo(x1, y1, x2, y2, x3, y3);
+					if (c == 'C')
+						cc2.setAbsolute(true);
+					return cc2;
+				}
+			};
+		}
+
+		case 'Q':
+		case 'q': {
+			in.parseWhitespace();
+			double x1 = parseValue();
+			parseSeparator();
+			double y1 = parseValue();
+			parseSeparator();
+			double x2 = parseValue();
+			parseSeparator();
+			double y2 = parseValue();
+
+			String sx1 = df.format(x1), sx2 = df.format(x2), sy1 = df.format(y1), sy2 = df.format(y2);
+
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'C'
+							? "{\n\tQuadCurveTo quadCurveTo = new QuadCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", "
+									+ sy2 + ");\n\tquadCurveTo.setAbsolute(true);\n\t" + varname
+									+ ".add(quadCurveTo);\n}"
+							: varname + ".add(new QuadCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", " + sy2 + ");";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					QuadCurveTo cc2 = new QuadCurveTo(x1, y1, x2, y2);
 					if (c == 'C')
 						cc2.setAbsolute(true);
 					return cc2;
