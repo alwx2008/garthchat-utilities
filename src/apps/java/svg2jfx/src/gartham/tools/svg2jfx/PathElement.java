@@ -1,5 +1,9 @@
 package gartham.tools.svg2jfx;
 
 public interface PathElement {
-	public void toJavaFXStatement();
+	String toJavaFXStatement();
+
+	String toSVGPart();
+
+	javafx.scene.shape.PathElement toJavaFX();
 }
