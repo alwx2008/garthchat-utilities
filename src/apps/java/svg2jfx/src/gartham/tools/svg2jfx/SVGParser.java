@@ -111,7 +111,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 		}
 
 		case 'H':
-		case 'h':
+		case 'h': {
 			in.parseWhitespace();
 			double val = parseValue();
 
@@ -126,7 +126,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 				@Override
 				public String toJavaFXStatement() {
 					return c == 'H'
-							? "{\n\tHLineTo hLineTo = new LineTo(" + v + ");\n\thLineTo.setAbsolute(true);\n\t"
+							? "{\n\tHLineTo hLineTo = new HLineTo(" + v + ");\n\thLineTo.setAbsolute(true);\n\t"
 									+ varname + ".add(hLineTo);\n}"
 							: varname + ".add(new HLineTo(" + v + "));";
 				}
@@ -139,6 +139,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 					return hlt;
 				}
 			};
+		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + in.nxt());
 		}
