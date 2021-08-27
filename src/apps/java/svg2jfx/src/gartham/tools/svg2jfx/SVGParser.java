@@ -140,6 +140,37 @@ public class SVGParser extends BufferedParser<PathElement> {
 				}
 			};
 		}
+
+		case 'V':
+		case 'v': {
+			in.parseWhitespace();
+			double val = parseValue();
+
+			String v = df.format(val);
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return c + v;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'V'
+							? "{\n\tVLineTo vLineTo = new VLineTo(" + v + ");\n\tvLineTo.setAbsolute(true);\n\t"
+									+ varname + ".add(vLineTo);\n}"
+							: varname + ".add(new VLineTo(" + v + "));";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					HLineTo hlt = new HLineTo(val);
+					if (c == 'V')
+						hlt.setAbsolute(true);
+					return hlt;
+				}
+			};
+		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + in.nxt());
 		}
