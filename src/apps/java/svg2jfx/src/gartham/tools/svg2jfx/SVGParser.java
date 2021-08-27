@@ -3,6 +3,7 @@ package gartham.tools.svg2jfx;
 import java.text.DecimalFormat;
 
 import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -194,6 +195,52 @@ public class SVGParser extends BufferedParser<PathElement> {
 				}
 			};
 		}
+
+		case 'C':
+		case 'c': {
+			in.parseWhitespace();
+			double x1 = parseValue();
+			parseSeparator();
+			double y1 = parseValue();
+			parseSeparator();
+			double x2 = parseValue();
+			parseSeparator();
+			double y2 = parseValue();
+			parseSeparator();
+			double x3 = parseValue();
+			parseSeparator();
+			double y3 = parseValue();
+
+			String sx1 = df.format(x1), sx2 = df.format(x2), sx3 = df.format(x3), sy1 = df.format(y1),
+					sy2 = df.format(y2), sy3 = df.format(y3);
+
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2 + ' ' + sx3 + ',' + sy3;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'C'
+							? "{\n\tCubicCurveTo cubicCurveTo = new CubicCurveTo(" + sx1 + ", " + sy1 + ", " + sx2
+									+ ", " + sy2 + ", " + sx3 + " " + sy3 + ");\n\tcubicCurveTo.setAbsolute(true);\n\t"
+									+ varname + ".add(cubicCurveTo);\n}"
+							: varname + ".add(new CubicCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", " + sy2 + ", "
+									+ sx3 + ", " + sy3 + ");";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					CubicCurveTo cc2 = new CubicCurveTo(x1, y1, x2, y2, x3, y3);
+					if (c == 'C')
+						cc2.setAbsolute(true);
+					return cc2;
+				}
+			};
+		}
+
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + in.nxt());
 		}
