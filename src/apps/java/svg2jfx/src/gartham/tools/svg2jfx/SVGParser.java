@@ -2,6 +2,7 @@ package gartham.tools.svg2jfx;
 
 import java.text.DecimalFormat;
 
+import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import zeale.mouse.utils.BufferedParser;
 import zeale.mouse.utils.CharacterParser;
@@ -67,7 +68,43 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public javafx.scene.shape.PathElement toJavaFX() {
-					return new MoveTo(val, val2);
+					MoveTo m = new MoveTo(val, val2);
+					if (c == 'M')
+						m.setAbsolute(true);
+					return m;
+				}
+			};
+		}
+
+		case 'L':
+		case 'l': {
+			in.parseWhitespace();
+			double val = parseValue();
+			parseSeparator();
+			double val2 = parseValue();
+
+			String v1 = df.format(val), v2 = df.format(val2);
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return c + v1 + ',' + v2;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'L'
+							? "{\n\tLineTo lineTo = new LineTo(" + v1 + ", " + v2
+									+ ");\n\tlineTo.setAbsolute(true);\n\t" + varname + ".add(lineTo);\n}"
+							: varname + ".add(new LineTo(" + v1 + ", " + v2 + "));";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					LineTo lt = new LineTo(val, val2);
+					if (c == 'L')
+						lt.setAbsolute(true);
+					return lt;
 				}
 			};
 		}
