@@ -202,9 +202,10 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 	private void parseSeparator() {
 		in.parseWhitespace();
-		if (in.pk() == ',')
+		if (in.pk() == ',') {
 			in.nxt();
-		in.parseWhitespace();
+			in.parseWhitespace();
+		}
 	}
 
 	private double parseValue() {
