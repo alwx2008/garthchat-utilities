@@ -2,6 +2,7 @@ package gartham.tools.svg2jfx;
 
 import java.text.DecimalFormat;
 
+import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import zeale.mouse.utils.BufferedParser;
@@ -108,6 +109,36 @@ public class SVGParser extends BufferedParser<PathElement> {
 				}
 			};
 		}
+
+		case 'H':
+		case 'h':
+			in.parseWhitespace();
+			double val = parseValue();
+
+			String v = df.format(val);
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return c + v;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'H'
+							? "{\n\tHLineTo hLineTo = new LineTo(" + v + ");\n\thLineTo.setAbsolute(true);\n\t"
+									+ varname + ".add(hLineTo);\n}"
+							: varname + ".add(new HLineTo(" + v + "));";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					HLineTo hlt = new HLineTo(val);
+					if (c == 'H')
+						hlt.setAbsolute(true);
+					return hlt;
+				}
+			};
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + in.nxt());
 		}
