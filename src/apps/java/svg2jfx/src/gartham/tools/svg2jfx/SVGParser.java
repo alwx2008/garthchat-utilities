@@ -2,6 +2,7 @@ package gartham.tools.svg2jfx;
 
 import java.text.DecimalFormat;
 
+import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -168,6 +169,28 @@ public class SVGParser extends BufferedParser<PathElement> {
 					if (c == 'V')
 						hlt.setAbsolute(true);
 					return hlt;
+				}
+			};
+		}
+
+		case 'Z':
+		case 'z': {
+
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return "Z";
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return varname + ".add(new ClosePath());";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					return new ClosePath();
 				}
 			};
 		}
