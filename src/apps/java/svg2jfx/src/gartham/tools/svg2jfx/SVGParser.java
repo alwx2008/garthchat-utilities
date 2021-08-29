@@ -328,7 +328,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 		}
 
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + c);
+			throw new IllegalArgumentException("Unexpected value: " + (char) c);
 		}
 	}
 
