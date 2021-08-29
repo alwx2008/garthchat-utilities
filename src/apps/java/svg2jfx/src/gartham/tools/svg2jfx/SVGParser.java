@@ -37,15 +37,10 @@ public class SVGParser extends BufferedParser<PathElement> {
 		this(CharacterParser.from(in));
 	}
 
-	/**
-	 * Parses the next {@link PathElement}, returning <code>null</code> if the end
-	 * of input has been reached or an error if there is otherwise malformed input.
-	 */
-	@Override
-	protected PathElement read() {
-		in.parseWhitespace();
-		int c;
-		switch (c = in.nxt()) {
+	private char previousCmd;
+
+	private PathElement parseNext(int c) {
+		switch (c) {
 		case -1:
 			return null;
 		case 'M':
@@ -330,6 +325,20 @@ public class SVGParser extends BufferedParser<PathElement> {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + (char) c);
 		}
+	}
+
+	/**
+	 * Parses the next {@link PathElement}, returning <code>null</code> if the end
+	 * of input has been reached or an error if there is otherwise malformed input.
+	 */
+	@Override
+	protected PathElement read() {
+		in.parseWhitespace();
+		int c = in.pk();
+		return c == -1 ? null
+				: Character.isDigit(c) || c == '-' || c == '.' ? parseNext(previousCmd)
+						: parseNext(previousCmd = in.next());
+
 	}
 
 	private void parseSeparator() {
