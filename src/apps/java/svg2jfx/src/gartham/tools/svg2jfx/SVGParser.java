@@ -2,6 +2,7 @@ package gartham.tools.svg2jfx;
 
 import java.text.DecimalFormat;
 
+import javafx.scene.shape.ArcTo;
 import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.HLineTo;
@@ -277,6 +278,51 @@ public class SVGParser extends BufferedParser<PathElement> {
 					if (c == 'C')
 						cc2.setAbsolute(true);
 					return cc2;
+				}
+			};
+		}
+
+		case 'A':
+		case 'a': {
+			in.parseWhitespace();
+			double rx = parseValue();
+			parseSeparator();
+			double ry = parseValue();
+			parseSeparator();
+			double xar = parseValue();
+			parseSeparator();
+			int laf = (int) parseValue();
+			parseSeparator();
+			int sf = (int) parseValue();
+			parseSeparator();
+			double x = parseValue();
+			parseSeparator();
+			double y = parseValue();
+			parseSeparator();
+
+			String rxs = df.format(rx), rys = df.format(ry), xars = df.format(xar), lafs = String.valueOf(laf == 1),
+					sfs = String.valueOf(sf == 1), xs = df.format(x), ys = df.format(y);
+
+			return new PathElement() {
+
+				@Override
+				public String toSVGPart() {
+					return (char) c + rxs + ' ' + rys + ' ' + xars + ' ' + lafs + ' ' + sfs + ' ' + xs + ' ' + ys;
+				}
+
+				@Override
+				public String toJavaFXStatement() {
+					return c == 'A'
+							? "{\n\tArcTo arcTo = new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
+									+ ", " + lafs + ", " + sfs + ");\n\tarcTo.setAbsolute(true);\n\t" + varname
+									+ ".add(arcTo);"
+							: varname + ".add(new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
+									+ ", " + lafs + ", " + sfs + "));";
+				}
+
+				@Override
+				public javafx.scene.shape.PathElement toJavaFX() {
+					return new ArcTo(rx, ry, xar, x, y, laf == 1, sf == 1);
 				}
 			};
 		}
