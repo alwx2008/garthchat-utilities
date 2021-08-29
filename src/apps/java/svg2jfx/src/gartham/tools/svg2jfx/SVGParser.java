@@ -59,7 +59,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 			return new PathElement() {
 				@Override
 				public String toSVGPart() {
-					return c + v1 + "," + v2;
+					return (char) c + v1 + "," + v2;
 				}
 
 				@Override
@@ -92,7 +92,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toSVGPart() {
-					return c + v1 + ',' + v2;
+					return (char) c + v1 + ',' + v2;
 				}
 
 				@Override
@@ -123,7 +123,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toSVGPart() {
-					return c + v;
+					return (char) c + v;
 				}
 
 				@Override
@@ -154,7 +154,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toSVGPart() {
-					return c + v;
+					return (char) c + v;
 				}
 
 				@Override
@@ -219,7 +219,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toSVGPart() {
-					return c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2 + ' ' + sx3 + ',' + sy3;
+					return (char) c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2 + ' ' + sx3 + ',' + sy3;
 				}
 
 				@Override
@@ -259,7 +259,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toSVGPart() {
-					return c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2;
+					return (char) c + sx1 + ',' + sy1 + ' ' + sx2 + ',' + sy2;
 				}
 
 				@Override
