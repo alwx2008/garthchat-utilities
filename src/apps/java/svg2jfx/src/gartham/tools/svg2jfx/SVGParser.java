@@ -361,7 +361,19 @@ public class SVGParser extends BufferedParser<PathElement> {
 			str += '.';
 			in.nxt();
 			str += in.clct(Character::isDigit);
-		} else if (str.isEmpty())
+		}
+
+		if (in.pk() == 'e') {
+			in.next();
+			str += 'e';
+			if (in.pk() == '-') {
+				in.next();
+				str += '-';
+			}
+			str += in.clct(Character::isDigit);
+		}
+
+		if (str.isEmpty())
 			throw new RuntimeException("Malformed input to SVGParser.");
 		return Double.parseDouble(str);
 
