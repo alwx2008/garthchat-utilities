@@ -60,9 +60,9 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'M'
+					return c == 'm'
 							? "{\n\tMoveTo moveTo = new MoveTo(" + v1 + ", " + v2
-									+ ");\n\tmoveTo.setAbsolute(true);\n\t" + varname + ".add(moveTo);\n}"
+									+ ");\n\tmoveto.setAbsolute(false);\n\t" + varname + ".add(moveTo);\n}"
 							: varname + ".add(new MoveTo(" + v1 + ", " + v2 + "));";
 				}
 
@@ -93,9 +93,9 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'L'
+					return c == 'l'
 							? "{\n\tLineTo lineTo = new LineTo(" + v1 + ", " + v2
-									+ ");\n\tlineTo.setAbsolute(true);\n\t" + varname + ".add(lineTo);\n}"
+									+ ");\n\tlineto.setAbsolute(false);\n\t" + varname + ".add(lineTo);\n}"
 							: varname + ".add(new LineTo(" + v1 + ", " + v2 + "));";
 				}
 
@@ -124,8 +124,8 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'H'
-							? "{\n\tHLineTo hLineTo = new HLineTo(" + v + ");\n\thLineTo.setAbsolute(true);\n\t"
+					return c == 'h'
+							? "{\n\tHLineTo hLineTo = new HLineTo(" + v + ");\n\thLineto.setAbsolute(false);\n\t"
 									+ varname + ".add(hLineTo);\n}"
 							: varname + ".add(new HLineTo(" + v + "));";
 				}
@@ -155,8 +155,8 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'V'
-							? "{\n\tVLineTo vLineTo = new VLineTo(" + v + ");\n\tvLineTo.setAbsolute(true);\n\t"
+					return c == 'v'
+							? "{\n\tVLineTo vLineTo = new VLineTo(" + v + ");\n\tvLineto.setAbsolute(false);\n\t"
 									+ varname + ".add(vLineTo);\n}"
 							: varname + ".add(new VLineTo(" + v + "));";
 				}
@@ -220,9 +220,9 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'C'
+					return c == 'c'
 							? "{\n\tCubicCurveTo cubicCurveTo = new CubicCurveTo(" + sx1 + ", " + sy1 + ", " + sx2
-									+ ", " + sy2 + ", " + sx3 + " " + sy3 + ");\n\tcubicCurveTo.setAbsolute(true);\n\t"
+									+ ", " + sy2 + ", " + sx3 + " " + sy3 + ");\n\tcubicCurveto.setAbsolute(false);\n\t"
 									+ varname + ".add(cubicCurveTo);\n}"
 							: varname + ".add(new CubicCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", " + sy2 + ", "
 									+ sx3 + ", " + sy3 + ");";
@@ -307,9 +307,9 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'A'
+					return c == 'a'
 							? "{\n\tArcTo arcTo = new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
-									+ ", " + lafs + ", " + sfs + ");\n\tarcTo.setAbsolute(true);\n\t" + varname
+									+ ", " + lafs + ", " + sfs + ");\n\tarcto.setAbsolute(false);\n\t" + varname
 									+ ".add(arcTo);"
 							: varname + ".add(new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
 									+ ", " + lafs + ", " + sfs + "));";
