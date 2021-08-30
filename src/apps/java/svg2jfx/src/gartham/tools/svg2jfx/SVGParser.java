@@ -18,6 +18,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 	private static final DecimalFormat df = new DecimalFormat("#.################################");
 
 	private String varname = "p";
+	private boolean started;
 
 	public String getVarname() {
 		return varname;
@@ -39,7 +40,14 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 	private char previousCmd;
 
-	private PathElement parseNext(int c) {
+	private PathElement parseNext(int chr) {
+
+		if (!started) {
+			chr = Character.toUpperCase(chr);
+			started = true;
+		}
+		final int c = chr;
+
 		switch (c) {
 		case -1:
 			return null;
