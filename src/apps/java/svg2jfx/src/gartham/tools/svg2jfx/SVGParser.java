@@ -260,9 +260,9 @@ public class SVGParser extends BufferedParser<PathElement> {
 
 				@Override
 				public String toJavaFXStatement() {
-					return c == 'C'
+					return c == 'q'
 							? "{\n\tQuadCurveTo quadCurveTo = new QuadCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", "
-									+ sy2 + ");\n\tquadCurveTo.setAbsolute(true);\n\t" + varname
+									+ sy2 + ");\n\tquadCurveto.setAbsolute(false);\n\t" + varname
 									+ ".add(quadCurveTo);\n}"
 							: varname + ".add(new QuadCurveTo(" + sx1 + ", " + sy1 + ", " + sx2 + ", " + sy2 + ");";
 				}
@@ -270,7 +270,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 				@Override
 				public javafx.scene.shape.PathElement toJavaFX() {
 					QuadCurveTo cc2 = new QuadCurveTo(x1, y1, x2, y2);
-					if (c == 'C')
+					if (c == 'q')
 						cc2.setAbsolute(true);
 					return cc2;
 				}
