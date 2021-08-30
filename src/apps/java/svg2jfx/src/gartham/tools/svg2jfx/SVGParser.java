@@ -310,7 +310,7 @@ public class SVGParser extends BufferedParser<PathElement> {
 					return c == 'a'
 							? "{\n\tArcTo arcTo = new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
 									+ ", " + lafs + ", " + sfs + ");\n\tarcto.setAbsolute(false);\n\t" + varname
-									+ ".add(arcTo);"
+									+ ".add(arcTo);}"
 							: varname + ".add(new ArcTo(" + rxs + ", " + rys + ", " + xars + ", " + xs + ", " + ys
 									+ ", " + lafs + ", " + sfs + "));";
 				}
